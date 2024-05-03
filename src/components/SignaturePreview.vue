@@ -15,8 +15,7 @@
         <div>{{ jobTitle }}</div>
       </div>
       <div class="font-semibold text-red-500 text-transform: capitalize">
-        <span v-if="company" class="text-black">company:</span>
-        {{ company }}
+        <span v-if="phone" class="text-black">phone:</span> {{ phone }}
       </div>
       <div>
         <span v-if="email">email:</span>
@@ -48,7 +47,7 @@ export default {
       type: String,
       required: true,
     },
-    company: {
+    phone: {
       type: String,
       required: true,
     },
@@ -68,7 +67,7 @@ export default {
   computed: {
     showLogo() {
       return (
-        this.name || this.jobTitle || this.company || this.email || this.website
+        this.name || this.jobTitle || this.phone || this.email || this.website
       );
     },
   },

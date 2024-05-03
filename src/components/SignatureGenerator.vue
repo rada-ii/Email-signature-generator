@@ -8,9 +8,9 @@
         placeholder="Enter your job title"
       />
       <InputField
-        v-model="company"
-        label="Company"
-        placeholder="Enter your company name"
+        v-model="phone"
+        label="Phone"
+        placeholder="Enter your phone number"
       />
       <InputField
         v-model="email"
@@ -30,7 +30,7 @@
       <SignaturePreview
         :name="name"
         :jobTitle="jobTitle"
-        :company="company"
+        :phone="phone"
         :email="email"
         :website="website"
         :companyLogo="companyLogo"
@@ -53,7 +53,7 @@ export default {
     return {
       name: "",
       jobTitle: "",
-      company: "",
+      phone: "",
       email: "",
       website: "",
       companyLogo: companyLogo,
