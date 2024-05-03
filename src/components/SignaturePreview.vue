@@ -7,19 +7,24 @@
     />
     <div>
       <div class="flex justify-center">
-        <div class="font-bold mr-4 pr-4 border-r border-gray-300">
+        <div
+          class="font-bold mr-4 pr-4 border-r border-gray-300 text-transform: capitalize"
+        >
           {{ name }}
         </div>
         <div>{{ jobTitle }}</div>
       </div>
-      <div class="font-semibold text-red-500">{{ company }}</div>
+      <div class="font-semibold text-red-500 text-transform: capitalize">
+        {{ company }}
+      </div>
       <div>
-        email:<a :href="`mailto:${email}`" class="text-blue-500 hover:underline"
+        <span v-if="email">email:</span>
+        <a :href="`mailto:${email}`" class="text-blue-500 hover:underline"
           >&nbsp;{{ email }}</a
         >
       </div>
       <div>
-        website:
+        <span v-if="website">website:</span>
         <a
           :href="`https://${website}`"
           target="_blank"
