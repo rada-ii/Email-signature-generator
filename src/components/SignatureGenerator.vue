@@ -24,7 +24,9 @@
       />
     </div>
     <div class="w-1/2 pl-4 border-l border-gray-300">
-      <div class="mb-4 font-bold text-lg text-center">Preview</div>
+      <div class="mb-4 font-bold text-lg text-center text-[#ff00007e]">
+        Preview
+      </div>
       <SignaturePreview
         :name="name"
         :jobTitle="jobTitle"

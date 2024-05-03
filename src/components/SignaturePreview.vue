@@ -1,12 +1,12 @@
 <template>
-  <div class="flex items-center my-24 px-10">
+  <div v-if="showLogo" class="flex items-center my-24 px-10">
     <img
       :src="companyLogo"
       alt="Company Logo"
       class="w-40 h-24 mr-4 pr-4 border-r border-[#FF0000]"
     />
     <div>
-      <div class="flex justify-center">
+      <div class="flex">
         <div
           class="font-bold mr-4 pr-4 border-r border-gray-300 text-transform: capitalize"
         >
@@ -15,6 +15,7 @@
         <div>{{ jobTitle }}</div>
       </div>
       <div class="font-semibold text-red-500 text-transform: capitalize">
+        <span v-if="company" class="text-black">company:</span>
         {{ company }}
       </div>
       <div>
@@ -62,6 +63,13 @@ export default {
     companyLogo: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    showLogo() {
+      return (
+        this.name || this.jobTitle || this.company || this.email || this.website
+      );
     },
   },
 };
