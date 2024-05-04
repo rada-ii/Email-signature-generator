@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white rounded-lg shadow-2xl p-6 flex">
-    <div class="w-1/2 pr-4">
+  <div class="bg-white rounded-lg shadow-2xl p-6 flex flex-col lg:flex-row">
+    <div class="lg:w-1/2 lg:pr-4 pb-6 w-full">
       <InputField v-model="name" label="Name" placeholder="Enter your name" />
       <InputField
         v-model="jobTitle"
@@ -23,8 +23,10 @@
         placeholder="Enter your website URL"
       />
     </div>
-    <div class="w-1/2 pl-4 border-l border-gray-300">
-      <div class="mb-4 font-bold text-lg text-center text-[#ff00007e]">
+    <div
+      class="lg:w-1/2 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300"
+    >
+      <div class="my-4 font-bold text-lg text-center text-[#ff00007e]">
         Preview
       </div>
       <SignaturePreview
