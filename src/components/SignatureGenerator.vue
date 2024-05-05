@@ -1,24 +1,28 @@
 <template>
   <div class="bg-white rounded-lg shadow-2xl p-6 flex flex-col lg:flex-row">
     <div class="lg:w-1/2 lg:pr-4 pb-6 w-full">
-      <InputField v-model="name" label="Name" placeholder="Enter your name" />
       <InputField
-        v-model="jobTitle"
+        v-model="state.name"
+        label="Name"
+        placeholder="Enter your name"
+      />
+      <InputField
+        v-model="state.jobTitle"
         label="Job Title"
         placeholder="Enter your job title"
       />
       <InputField
-        v-model="phone"
+        v-model="state.phone"
         label="Phone"
         placeholder="Enter your phone number"
       />
       <InputField
-        v-model="email"
+        v-model="state.email"
         label="Email"
         placeholder="Enter your email address"
       />
       <InputField
-        v-model="website"
+        v-model="state.website"
         label="Website"
         placeholder="Enter your website URL"
       />
@@ -30,18 +34,20 @@
         Preview
       </div>
       <SignaturePreview
-        :name="name"
-        :jobTitle="jobTitle"
-        :phone="phone"
-        :email="email"
-        :website="website"
+        :name="state.name"
+        :jobTitle="state.jobTitle"
+        :phone="state.phone"
+        :email="state.email"
+        :website="state.website"
         :companyLogo="companyLogo"
+        :showLogo="showLogo"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { reactive, computed } from "vue";
 import InputField from "./InputField.vue";
 import SignaturePreview from "./SignaturePreview.vue";
 import companyLogo from "../assets/logo.png";
@@ -51,14 +57,29 @@ export default {
     InputField,
     SignaturePreview,
   },
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       name: "",
       jobTitle: "",
       phone: "",
       email: "",
       website: "",
-      companyLogo: companyLogo,
+    });
+
+    const showLogo = computed(() => {
+      return (
+        state.name ||
+        state.jobTitle ||
+        state.phone ||
+        state.email ||
+        state.website
+      );
+    });
+
+    return {
+      state,
+      companyLogo,
+      showLogo,
     };
   },
 };
