@@ -1,6 +1,8 @@
 <template>
-  <div class="container mx-auto sm:p-8 px-2">
-    <h1 class="sm:text-3xl text-xl font-bold my-8 text-center text-[#FF0000]">
+  <div
+    class="container mx-auto flex flex-col justify-center min-h-screen sm:p-8 px-2 w-full"
+  >
+    <h1 class="sm:text-2xl text-xl font-bold my-4 text-center text-[#FF0000]">
       Daxon Email Signature Generator
     </h1>
     <SignatureGenerator />

@@ -1,13 +1,20 @@
 <template>
   <div class="mb-4">
-    <label class="block font-bold mb-2" :for="label">{{ label }}</label>
+    <label class="block lg:font-bold font-semibold mb-2" :for="label">{{
+      label
+    }}</label>
     <input
       :id="label"
-      :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      :value="localValue"
+      @input="validateInput"
       :placeholder="placeholder"
-      class="w-full border border-gray-300 rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer text-[#ff00007e]"
+      class="w-full border border-gray-300 rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer text-black"
     />
+    <div v-if="errors.length" class="text-red-500 mt-1">
+      <div v-for="error in errors" :key="error">
+        <span>{{ error }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,7 +31,40 @@ export default {
     },
     placeholder: {
       type: String,
-      required: true,
+      required: false,
+    },
+    rules: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  data() {
+    return {
+      localValue: this.modelValue,
+      errors: [],
+    };
+  },
+  methods: {
+    validateInput(event) {
+      const value = event.target.value;
+      this.localValue = value;
+      this.errors = [];
+      let isValid = true;
+      for (const rule of this.rules) {
+        const result = rule(value);
+        if (typeof result === "string") {
+          this.errors.push(result);
+          isValid = false;
+        }
+      }
+      if (isValid) {
+        this.$emit("update:modelValue", value);
+      }
+    },
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value;
     },
   },
 };

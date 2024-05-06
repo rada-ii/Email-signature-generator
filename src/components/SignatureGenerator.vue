@@ -4,29 +4,39 @@
   >
     <div class="lg:w-1/3 lg:pr-4 w-full">
       <InputField
-        v-model="state.name"
+        v-model="name"
         label="Name"
         placeholder="Enter your name"
+        :rules="nameRules"
+        @input="handleInputChange"
       />
       <InputField
-        v-model="state.jobTitle"
+        v-model="jobTitle"
         label="Job Title"
         placeholder="Enter your job title"
+        :rules="jobTitleRules"
+        @input="handleInputChange"
       />
       <InputField
-        v-model="state.phone"
+        v-model="phone"
         label="Phone"
         placeholder="Enter your phone number"
+        :rules="phoneRules"
+        @input="formatPhoneNumber"
       />
       <InputField
-        v-model="state.email"
+        v-model="email"
         label="Email"
         placeholder="Enter your email address"
+        :rules="emailRules"
+        @input="handleInputChange"
       />
       <InputField
-        v-model="state.website"
+        v-model="website"
         label="Website"
         placeholder="Enter your website URL"
+        :rules="websiteRules"
+        @input="handleInputChange"
       />
     </div>
     <div
@@ -36,20 +46,31 @@
         Preview
       </div>
       <SignaturePreview
-        :name="state.name"
-        :jobTitle="state.jobTitle"
-        :phone="state.phone"
-        :email="state.email"
-        :website="state.website"
+        v-if="showLogo"
+        :name="name"
+        :jobTitle="jobTitle"
+        :phone="formattedPhoneNumber"
+        :email="email"
+        :website="website"
         :companyLogo="companyLogo"
-        :showLogo="showLogo"
       />
+      <div v-if="showLogo" class="flex items-center">
+        <button
+          @click="copySignature"
+          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-200"
+        >
+          Copy Signature
+        </button>
+      </div>
+      <div v-if="showCopiedMessage" class="text-green-500 text-center mt-4">
+        Signature copied!
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { reactive, computed } from "vue";
+import { ref, computed } from "vue";
 import InputField from "./InputField.vue";
 import SignaturePreview from "./SignaturePreview.vue";
 import companyLogo from "../assets/logo.png";
@@ -60,28 +81,102 @@ export default {
     SignaturePreview,
   },
   setup() {
-    const state = reactive({
-      name: "",
-      jobTitle: "",
-      phone: "",
-      email: "",
-      website: "",
-    });
+    const name = ref("");
+    const jobTitle = ref("");
+    const phone = ref("");
+    const email = ref("");
+    const website = ref("");
+    const formattedPhoneNumber = ref("");
+    const showCopiedMessage = ref(false);
+
+    const nameRules = [
+      (v) => !!v.trim() || "Name is required",
+      (v) =>
+        /^[a-zA-Z\s]+$/.test(v.trim()) ||
+        "Name should contain only letters and spaces",
+    ];
+    const jobTitleRules = [
+      (v) => !!v.trim() || "Job title is required",
+      (v) =>
+        /^[a-zA-Z\s]+$/.test(v.trim()) ||
+        "Job title should contain only letters and spaces",
+    ];
+    const phoneRules = [
+      (v) => !!v.trim() || "Phone number is required",
+      (v) => /^\d+$/.test(v) || "Phone number must contain only digits",
+    ];
+    const emailRules = [
+      (v) => !!v.trim() || "Email is required",
+      (v) =>
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+        "Invalid email address",
+    ];
+    const websiteRules = [
+      (v) => !!v.trim() || "Website is required",
+      (v) =>
+        /^(https?:\/\/)?[\w.-]+\.[a-zA-Z]{2,}$/.test(v.trim()) ||
+        "Invalid website URL",
+    ];
 
     const showLogo = computed(() => {
       return (
-        state.name ||
-        state.jobTitle ||
-        state.phone ||
-        state.email ||
-        state.website
+        name.value.trim() &&
+        jobTitle.value.trim() &&
+        phone.value.trim() &&
+        email.value.trim() &&
+        website.value.trim()
       );
     });
 
+    const formatPhoneNumber = () => {
+      let phoneValue = phone.value.replace(/\s/g, "");
+      if (phoneValue.startsWith("0")) {
+        phoneValue = phoneValue.substring(1);
+      }
+      const formattedValue = phoneValue.replace(
+        /(\d{3})(\d{3})(\d*)/,
+        "$1 $2 $3"
+      );
+      formattedPhoneNumber.value = formattedValue;
+    };
+
+    const copySignature = () => {
+      const signatureContainer = document.querySelector(".signature-preview");
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.selectNodeContents(signatureContainer);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand("copy");
+      showCopiedMessage.value = true;
+      setTimeout(() => {
+        showCopiedMessage.value = false;
+      }, 2000);
+      selection.removeAllRanges();
+    };
+
+    const handleInputChange = () => {
+      showCopiedMessage.value = false;
+    };
+
     return {
-      state,
-      companyLogo,
+      name,
+      jobTitle,
+      phone,
+      email,
+      website,
+      formattedPhoneNumber,
+      showCopiedMessage,
+      nameRules,
+      jobTitleRules,
+      phoneRules,
+      emailRules,
+      websiteRules,
       showLogo,
+      formatPhoneNumber,
+      copySignature,
+      handleInputChange,
+      companyLogo,
     };
   },
 };
