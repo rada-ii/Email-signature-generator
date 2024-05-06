@@ -1,4 +1,4 @@
-<template class="">
+<template>
   <div
     v-if="showLogo"
     ref="signatureContainer"
@@ -9,7 +9,7 @@
       alt="Company Logo"
       class="sm:w-40 w-24 h-28 lg:mr-4 sm:mr-4 mr-2 pl-0 sm:pr-4 pr-1 border-r border-[#FF0000] ml-0"
     />
-    <div>
+    <div class="datas leading-none">
       <div class="flex flex-col xl:flex-row xl:items-center">
         <div
           class="sm:font-semibold font-normal sm:text-xl text-sm mr-4 pr-4 xl:border-r border-0 border-gray-300 text-transform: capitalize"
@@ -61,6 +61,12 @@
     </button>
   </div>
 </template>
+
+<style scoped>
+.signature-preview * {
+  line-height: 0.5; /* Adjust line height as needed */
+}
+</style>
 
 <script>
 export default {
