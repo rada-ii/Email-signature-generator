@@ -32,7 +32,7 @@
     <div
       class="lg:w-2/3 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300 flex justify-around flex-col"
     >
-      <div class="font-bold text-lg text-center text-[#ff00007e] lg:-mt-4 mt-6">
+      <div class="font-bold text-xl text-center text-[#ff00007e] lg:-mt-6 mt-6">
         Preview
       </div>
       <SignaturePreview
