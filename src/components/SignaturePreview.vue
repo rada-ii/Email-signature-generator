@@ -1,27 +1,27 @@
-<template>
+<template class="">
   <div
     v-if="showLogo"
     ref="signatureContainer"
-    class="flex items-center justify-center mt-24 mb-12 xl:px-10 px-0"
+    class="flex items-center justify-center lg:mt-24 mt-12 mb-12 xl:px-10 px-0"
   >
     <img
       :src="companyLogo"
       alt="Company Logo"
-      class="sm:w-40 w-20 h-24 lg:mr-4 sm:mr-4 mr-2 lg:p-4 pl-0 sm:pr-4 pr-1 border-r border-[#FF0000] ml-0"
+      class="sm:w-40 w-24 h-28 lg:mr-4 sm:mr-4 mr-2 pl-0 sm:pr-4 pr-1 border-r border-[#FF0000] ml-0"
     />
     <div>
-      <div class="flex flex-col xl:flex-row xl:items-center gap-5 pb-4">
+      <div class="flex flex-col xl:flex-row xl:items-center">
         <div
           class="sm:font-semibold font-normal sm:text-xl text-sm mr-4 pr-4 xl:border-r border-0 border-gray-300 text-transform: capitalize"
         >
           {{ name }}
         </div>
-        <div class="sm:font-semibold font-normal sm:text-xl text-sm">
+        <div class="font-semibold sm:text-xl text-sm">
           {{ jobTitle }}
         </div>
       </div>
       <div
-        class="sm:font-semibold font-normal sm:text-xl text-sm text-red-500 pb-4"
+        class="sm:font-semibold font-normal sm:text-xl text-sm text-[#ff0000]"
       >
         <span v-if="phone" class="text-black">phone:</span> {{ phone }}
       </div>
@@ -33,7 +33,7 @@
         >
         <a
           :href="`mailto:${email}`"
-          class="text-blue-500 hover:underline sm:font-semibold font-normal sm:text-xl text-sm"
+          class="text-blue-600 hover:underline transition-all delay-50 sm:font-semibold font-normal sm:text-xl text-sm"
           >&nbsp;{{ email }}</a
         >
       </div>
@@ -46,16 +46,16 @@
         <a
           :href="`https://${website}`"
           target="_blank"
-          class="text-blue-500 hover:underline sm:font-semibold font-normal sm:text-xl text-sm"
+          class="text-blue-600 hover:underline transition-all delay-50 sm:font-semibold font-normal sm:text-xl text-sm"
           >&nbsp;{{ website }}</a
         >
       </div>
     </div>
   </div>
-  <div class="flex items-center">
+  <div v-if="showLogo" class="flex items-center">
     <button
       @click="copySignature"
-      class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto"
+      class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-200 c"
     >
       Copy Signature
     </button>
@@ -72,6 +72,13 @@ export default {
     website: String,
     companyLogo: String,
     showLogo: Boolean,
+  },
+  computed: {
+    showLogo() {
+      return (
+        this.name || this.jobTitle || this.phone || this.email || this.website
+      );
+    },
   },
   methods: {
     copySignature() {

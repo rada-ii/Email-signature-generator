@@ -1,8 +1,8 @@
 <template>
   <div
-    class="bg-white rounded-lg shadow-2xl sm:p-6 px-2 flex flex-col lg:flex-row"
+    class="bg-white rounded-lg shadow-2xl sm:p-6 px-2 flex flex-col lg:flex-row sm:pt-6 pt-4"
   >
-    <div class="lg:w-1/2 lg:pr-4 pb-6 w-full">
+    <div class="lg:w-1/3 lg:pr-4 w-full">
       <InputField
         v-model="state.name"
         label="Name"
@@ -30,9 +30,9 @@
       />
     </div>
     <div
-      class="lg:w-1/2 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300"
+      class="lg:w-2/3 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300 flex justify-around flex-col"
     >
-      <div class="my-4 font-bold text-lg text-center text-[#ff00007e]">
+      <div class="font-bold text-lg text-center text-[#ff00007e] lg:-mt-4 mt-6">
         Preview
       </div>
       <SignaturePreview
