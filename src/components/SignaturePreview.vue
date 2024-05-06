@@ -1,74 +1,89 @@
 <template>
-  <div v-if="showLogo" class="flex items-center my-24 lg:px-10 px-0">
+  <div
+    v-if="showLogo"
+    ref="signatureContainer"
+    class="flex items-center justify-center mt-24 mb-12 xl:px-10 px-0"
+  >
     <img
       :src="companyLogo"
       alt="Company Logo"
-      class="w-40 h-24 lg:mr-4 mr-4 lg:p-4 pl-0 pr-4 border-r border-[#FF0000] ml-0"
+      class="sm:w-40 w-20 h-24 lg:mr-4 sm:mr-4 mr-2 lg:p-4 pl-0 sm:pr-4 pr-1 border-r border-[#FF0000] ml-0"
     />
     <div>
-      <div class="flex">
+      <div class="flex flex-col xl:flex-row xl:items-center gap-5 pb-4">
         <div
-          class="font-extrabold mr-4 pr-4 border-r border-gray-300 text-transform: capitalize"
+          class="sm:font-semibold font-normal sm:text-xl text-sm mr-4 pr-4 xl:border-r border-0 border-gray-300 text-transform: capitalize"
         >
           {{ name }}
         </div>
-        <div class="font-semibold">{{ jobTitle }}</div>
+        <div class="sm:font-semibold font-normal sm:text-xl text-sm">
+          {{ jobTitle }}
+        </div>
       </div>
-      <div class="font-semibold text-red-500">
+      <div
+        class="sm:font-semibold font-normal sm:text-xl text-sm text-red-500 pb-4"
+      >
         <span v-if="phone" class="text-black">phone:</span> {{ phone }}
       </div>
       <div>
-        <span v-if="email" class="font-semibold">email:</span>
-        <a :href="`mailto:${email}`" class="text-blue-500 hover:underline"
+        <span
+          v-if="email"
+          class="sm:font-semibold font-normal sm:text-xl text-sm"
+          >email:</span
+        >
+        <a
+          :href="`mailto:${email}`"
+          class="text-blue-500 hover:underline sm:font-semibold font-normal sm:text-xl text-sm"
           >&nbsp;{{ email }}</a
         >
       </div>
       <div>
-        <span v-if="website" class="font-semibold">website:</span>
+        <span
+          v-if="website"
+          class="sm:font-semibold font-normal sm:text-xl text-sm"
+          >website:</span
+        >
         <a
           :href="`https://${website}`"
           target="_blank"
-          class="text-blue-500 hover:underline"
+          class="text-blue-500 hover:underline sm:font-semibold font-normal sm:text-xl text-sm"
           >&nbsp;{{ website }}</a
         >
       </div>
     </div>
+  </div>
+  <div class="flex items-center">
+    <button
+      @click="copySignature"
+      class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto"
+    >
+      Copy Signature
+    </button>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    jobTitle: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    website: {
-      type: String,
-      required: true,
-    },
-    companyLogo: {
-      type: String,
-      required: true,
-    },
+    name: String,
+    jobTitle: String,
+    phone: String,
+    email: String,
+    website: String,
+    companyLogo: String,
+    showLogo: Boolean,
   },
-  computed: {
-    showLogo() {
-      return (
-        this.name || this.jobTitle || this.phone || this.email || this.website
-      );
+  methods: {
+    copySignature() {
+      const el = this.$refs.signatureContainer;
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.selectNodeContents(el);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand("copy");
+      alert("Signature copied!");
+      selection.removeAllRanges();
     },
   },
 };

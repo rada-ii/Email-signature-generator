@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-white rounded-lg shadow-2xl p-6 flex flex-col lg:flex-row">
+  <div
+    class="bg-white rounded-lg shadow-2xl sm:p-6 px-2 flex flex-col lg:flex-row"
+  >
     <div class="lg:w-1/2 lg:pr-4 pb-6 w-full">
       <InputField
         v-model="state.name"
