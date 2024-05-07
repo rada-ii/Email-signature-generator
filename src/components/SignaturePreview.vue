@@ -7,6 +7,7 @@
       v-if="companyLogo"
       :src="companyLogo"
       alt="Company Logo"
+      class="img"
       style="
         width: 12.5rem;
         height: auto;
@@ -38,50 +39,54 @@
           {{ jobTitle }}
         </div>
       </div>
-      <div
-        v-if="phone"
-        style="
-          font-weight: 300;
-          font-size: 1.125rem;
-          line-height: 1rem;
-          color: #000;
-        "
-      >
-        <span style="font-weight: 300">phone:</span>
-        {{ phone }}
-      </div>
-      <div v-if="email">
-        <span style="font-weight: 300; font-size: 1.125rem; line-height: 1rem"
-          >email:</span
-        >
-        <a
-          :href="`mailto:${email}`"
+      <div class="data-user">
+        <div
+          class="phone"
+          v-if="phone"
           style="
-            color: #2563eb;
-            text-decoration: underline;
+            font-weight: 300;
             font-size: 1.125rem;
             line-height: 1rem;
+            color: #000;
           "
         >
-          {{ email }}
-        </a>
-      </div>
-      <div v-if="website" class="site">
-        <span style="font-weight: 300; font-size: 1.125rem; line-height: 0.7rem"
-          >website:</span
-        >
-        <a
-          :href="`https://${website}`"
-          target="_blank"
-          style="
-            color: #2563eb;
-            text-decoration: underline;
-            font-size: 1.125rem;
-            line-height: 0.7rem;
-          "
-        >
-          {{ website }}
-        </a>
+          <span style="font-weight: 300">phone:</span>
+          {{ phone }}
+        </div>
+        <div v-if="email" class="email">
+          <span style="font-weight: 300; font-size: 1.125rem; line-height: 1rem"
+            >email:</span
+          >
+          <a
+            :href="`mailto:${email}`"
+            style="
+              color: #2563eb;
+              text-decoration: underline;
+              font-size: 1.125rem;
+              line-height: 1rem;
+            "
+          >
+            {{ email }}
+          </a>
+        </div>
+        <div v-if="website" class="site">
+          <span
+            style="font-weight: 300; font-size: 1.125rem; line-height: 0.7rem"
+            >website:</span
+          >
+          <a
+            :href="`https://${website}`"
+            target="_blank"
+            style="
+              color: #2563eb;
+              text-decoration: underline;
+              font-size: 1.125rem;
+              line-height: 0.7rem;
+            "
+          >
+            {{ website }}
+          </a>
+        </div>
       </div>
     </div>
   </div>

@@ -20,3 +20,22 @@
     line-height: 1rem !important;
   }
 }
+
+@media (max-width: 780px) {
+  #nameJobContainer > div,
+  .signature-preview span,
+  .signature-preview a,
+  .phone {
+    font-size: 0.8rem !important;
+  }
+
+  .data-user {
+    align-items: flex-start !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .img {
+    width: 9rem !important;
+  }
+}

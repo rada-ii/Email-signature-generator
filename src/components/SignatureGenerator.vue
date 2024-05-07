@@ -51,7 +51,7 @@
       >
         Preview
       </div>
-      <div class="text-green-500 text-center h-4">
+      <div class="text-green-500 text-center h-4 my-6">
         <span v-if="showCopiedMessage">Signature copied!</span>
         <span
           v-else-if="
@@ -78,7 +78,7 @@
           v-if="inputFilled"
           @click="copySignature"
           :disabled="!isFormValid"
-          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-100 mt-0 sm:mt-8"
+          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-100 my-8 sm:mt-8"
           :class="{ 'opacity-50 cursor-not-allowed': !isFormValid }"
         >
           Copy Signature
