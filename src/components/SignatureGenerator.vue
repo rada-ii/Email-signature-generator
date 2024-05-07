@@ -42,29 +42,21 @@
     <div
       class="lg:w-2/3 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300 flex justify-around flex-col"
     >
-      <!-- <div
-        :class="[
-          'font-bold',
-          'text-xl',
-          'text-center',
-          'text-[#ff00007e]',
-
-          SignaturePreview ? 'mt-8' : '-my-28',
-        ]"
-      >
-        Preview
-      </div> -->
       <div
-        class="font-bold text-xl text-center text-[#ff00007e] lg:-mt-28 sm:mt-8 mt-8"
+        class="text-xl text-center text-[#ff0000] font-thin"
+        :class="{
+          'lg:-mt-8 sm:mt-8 my-8': isFormValid,
+          'lg:-mt-32 sm:mt-8 mt-8': !isFormValid,
+        }"
       >
         Preview
       </div>
-
       <div class="text-green-500 text-center h-4">
         <span v-if="showCopiedMessage">Signature copied!</span>
       </div>
+
       <SignaturePreview
-        v-if="showLogo"
+        v-if="isFormValid"
         :name="name"
         :jobTitle="jobTitle"
         :phone="formattedPhoneNumber"
@@ -72,10 +64,11 @@
         :website="website"
         :companyLogo="companyLogo"
       />
-      <div v-if="showLogo" class="flex items-center">
+
+      <div v-if="isFormValid" class="flex items-center">
         <button
           @click="copySignature"
-          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-200 mt-0 sm:mt-8"
+          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-1S00 mt-0 sm:mt-8"
         >
           Copy Signature
         </button>
@@ -104,6 +97,7 @@ export default {
     const formattedPhoneNumber = ref("");
     const showCopiedMessage = ref(false);
 
+    // Validation rules
     const nameRules = [
       (v) => !!v.trim() || "Name is required",
       (v) =>
@@ -133,13 +127,14 @@ export default {
         "Invalid website URL",
     ];
 
-    const showLogo = computed(() => {
+    // Computed property to check if all fields are valid
+    const isFormValid = computed(() => {
       return (
-        name.value.trim() &&
-        jobTitle.value.trim() &&
-        phone.value.trim() &&
-        email.value.trim() &&
-        website.value.trim()
+        !nameRules.some((rule) => rule(name.value) !== true) &&
+        !jobTitleRules.some((rule) => rule(jobTitle.value) !== true) &&
+        !phoneRules.some((rule) => rule(phone.value) !== true) &&
+        !emailRules.some((rule) => rule(email.value) !== true) &&
+        !websiteRules.some((rule) => rule(website.value) !== true)
       );
     });
 
@@ -187,7 +182,7 @@ export default {
       phoneRules,
       emailRules,
       websiteRules,
-      showLogo,
+      isFormValid, // Expose the isFormValid computed property
       formatPhoneNumber,
       copySignature,
       handleInputChange,

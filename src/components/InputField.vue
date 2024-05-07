@@ -1,3 +1,4 @@
+<!-- InputField.vue -->
 <template>
   <div class="mb-4">
     <label class="block lg:font-bold font-semibold mb-2" :for="label">{{
@@ -5,8 +6,8 @@
     }}</label>
     <input
       :id="label"
-      :value="localValue"
-      @input="validateInput"
+      :value="modelValue"
+      @input="handleInput"
       :placeholder="placeholder"
       class="w-full border border-gray-300 rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer text-black"
     />
@@ -40,16 +41,15 @@ export default {
   },
   data() {
     return {
-      localValue: this.modelValue,
       errors: [],
     };
   },
   methods: {
-    validateInput(event) {
+    handleInput(event) {
       const value = event.target.value;
-      this.localValue = value;
       this.errors = [];
       let isValid = true;
+
       for (const rule of this.rules) {
         const result = rule(value);
         if (typeof result === "string") {
@@ -57,14 +57,10 @@ export default {
           isValid = false;
         }
       }
+
       if (isValid) {
         this.$emit("update:modelValue", value);
       }
-    },
-  },
-  watch: {
-    modelValue(value) {
-      this.localValue = value;
     },
   },
 };

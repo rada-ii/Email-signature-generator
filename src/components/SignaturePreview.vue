@@ -1,3 +1,4 @@
+<!-- SignaturePreview.vue -->
 <template>
   <div
     ref="signatureContainer"
@@ -11,18 +12,18 @@
     <div class="datas">
       <div class="flex flex-col xl:flex-row xl:items-center">
         <div
-          class="sm:font-normal font-normal sm:text-lg lg:text-base text-xs mr-4 pr-4 xl:border-r border-0 border-gray-300 text-transform: capitalize"
+          class="sm:font-normal font-normal sm:text-lg sm:leading-none lg:text-base text-xs mr-4 pr-4 xl:border-r border-0 border-gray-300 text-transform: capitalize sm:pb-0 pb-1"
         >
           {{ name }}
         </div>
         <div
-          class="xl:font-normal font-medium sm:text-lg lg:text-base text-xs sm:pb-0 pb-1"
+          class="xl:font-normal font-medium sm:text-lg sm:leading-none lg:text-base text-xs sm:pb-0 pb-1"
         >
           {{ jobTitle }}
         </div>
       </div>
       <div
-        class="sm:font-normal font-light sm:text-lg lg:text-base text-xs text-[#ff0000]"
+        class="sm:font-normal font-light sm:text-lg sm:leading-none lg:text-base text-xs text-[#ff0000]"
       >
         <span v-if="phone" class="text-black sm:font-normal font-light"
           >phone:</span
@@ -32,25 +33,25 @@
       <div>
         <span
           v-if="email"
-          class="sm:font-normal font-light sm:text-lg lg:text-base text-xs"
+          class="sm:font-normal font-light sm:text-lg sm:leading-none lg:text-base text-xs"
           >email:</span
         >
         <a
           :href="`mailto:${email}`"
-          class="text-blue-600 hover:underline transition-all delay-50 sm:font-normal font-light sm:text-lg lg:text-base text-xs"
+          class="text-blue-600 hover:underline transition-all delay-50 sm:font-normal font-light sm:text-lg sm:leading-none lg:text-base text-xs"
           >&nbsp;{{ email }}</a
         >
       </div>
       <div>
         <span
           v-if="website"
-          class="sm:font-normal font-light sm:text-lg lg:text-base text-xs"
+          class="sm:font-normal font-light sm:text-lg sm:leading-none lg:text-base text-xs"
           >website:</span
         >
         <a
           :href="`https://${website}`"
           target="_blank"
-          class="text-blue-600 hover:underline transition-all delay-50 sm:font-normal font-normal sm:text-lg lg:text-base text-xs"
+          class="text-blue-600 hover:underline transition-all delay-50 sm:font-normal font-normal sm:text-lg sm:leading-none lg:text-base text-xs"
           >&nbsp;{{ website }}</a
         >
       </div>
@@ -77,9 +78,9 @@ export default {
     line-height: 0.9;
   }
 }
-@media (max-width: 1023px) {
+/* @media (max-width: 1023px) {
   .signature-preview * {
     line-height: 1.1;
   }
-}
+} */
 </style>
