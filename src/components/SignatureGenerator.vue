@@ -40,35 +40,46 @@
       />
     </div>
     <div
-      class="lg:w-2/3 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300 flex justify-around flex-col"
+      class="lg:w-2/3 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300 flex justify-around items-center flex-col"
     >
       <div
         class="text-xl text-center text-[#ff0000] font-thin"
         :class="{
           'lg:-mt-8 sm:mt-8 my-8': isFormValid,
-          'lg:-mt-32 sm:mt-8 mt-8': !isFormValid,
+          'lg:-mt-14 sm:mt-8 mt-8': !isFormValid,
         }"
       >
         Preview
       </div>
       <div class="text-green-500 text-center h-4">
         <span v-if="showCopiedMessage">Signature copied!</span>
+        <span
+          v-else-if="
+            !isFormValid && (name || jobTitle || phone || email || website)
+          "
+        >
+          Please fill in all fields correctly to copy the signature.
+        </span>
       </div>
 
-      <SignaturePreview
-        v-if="isFormValid"
-        :name="name"
-        :jobTitle="jobTitle"
-        :phone="formattedPhoneNumber"
-        :email="email"
-        :website="website"
-        :companyLogo="companyLogo"
-      />
+      <div v-if="showSignaturePreview">
+        <SignaturePreview
+          :name="name"
+          :jobTitle="jobTitle"
+          :phone="formattedPhoneNumber"
+          :email="email"
+          :website="website"
+          :companyLogo="showLogo ? companyLogo : null"
+        />
+      </div>
 
-      <div v-if="isFormValid" class="flex items-center">
+      <div class="flex items-center">
         <button
+          v-if="inputFilled"
           @click="copySignature"
-          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-1S00 mt-0 sm:mt-8"
+          :disabled="!isFormValid"
+          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-100 mt-0 sm:mt-8"
+          :class="{ 'opacity-50 cursor-not-allowed': !isFormValid }"
         >
           Copy Signature
         </button>
@@ -98,41 +109,72 @@ export default {
     const showCopiedMessage = ref(false);
 
     const nameRules = [
-      (v) => !!v.trim() || "Name is required",
       (v) =>
-        /^[a-zA-Z\s]+$/.test(v.trim()) ||
-        "Name should contain only letters and spaces",
+        /^[a-zA-ZčćšđžČĆŠĐŽ'\s]+$/.test(v) ||
+        "Name should contain only letters, accents, and spaces",
     ];
+
     const jobTitleRules = [
-      (v) => !!v.trim() || "Job title is required",
       (v) =>
-        /^[a-zA-Z\s]+$/.test(v.trim()) ||
+        /^[a-zA-Z\s]+$/.test(v) ||
         "Job title should contain only letters and spaces",
     ];
+
     const phoneRules = [
-      (v) => !!v.trim() || "Phone number is required",
-      (v) => /^\d+$/.test(v.trim()) || "Phone number must contain only digits",
+      (v) => !!v || "Phone number is required",
+      (v) => /^\d+$/.test(v) || "Phone number must contain only digits",
     ];
+
     const emailRules = [
-      (v) => !!v.trim() || "Email is required",
+      (v) => !!v || "Email is required",
       (v) =>
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v.trim()) ||
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
         "Invalid email address",
     ];
+
     const websiteRules = [
-      (v) => !!v.trim() || "Website is required",
+      (v) => !!v || "Website is required",
       (v) =>
-        /^(https?:\/\/)?[\w.-]+\.[a-zA-Z]{2,}$/.test(v.trim()) ||
+        /^(https?:\/\/)?[\w.-]+\.[a-zA-Z]{2,}$/.test(v) ||
         "Invalid website URL",
     ];
 
+    const inputFilled = computed(() => {
+      return (
+        name.value.trim() ||
+        jobTitle.value.trim() ||
+        phone.value.trim() ||
+        email.value.trim() ||
+        website.value.trim()
+      );
+    });
+
     const isFormValid = computed(() => {
       return (
-        !nameRules.some((rule) => rule(name.value) !== true) &&
         !jobTitleRules.some((rule) => rule(jobTitle.value) !== true) &&
         !phoneRules.some((rule) => rule(phone.value) !== true) &&
         !emailRules.some((rule) => rule(email.value) !== true) &&
         !websiteRules.some((rule) => rule(website.value) !== true)
+      );
+    });
+
+    const showLogo = computed(() => {
+      return (
+        name.value.trim() ||
+        jobTitle.value.trim() ||
+        phone.value.trim() ||
+        email.value.trim() ||
+        website.value.trim()
+      );
+    });
+
+    const showSignaturePreview = computed(() => {
+      return (
+        name.value ||
+        jobTitle.value ||
+        phone.value ||
+        email.value ||
+        website.value
       );
     });
 
@@ -148,19 +190,17 @@ export default {
       formattedPhoneNumber.value = formattedValue;
     };
 
-    const copySignature = () => {
-      const signatureContainer = document.querySelector(".signature-preview");
-      const range = document.createRange();
-      const selection = window.getSelection();
-      range.selectNodeContents(signatureContainer);
-      selection.removeAllRanges();
-      selection.addRange(range);
-      document.execCommand("copy");
-      showCopiedMessage.value = true;
-      setTimeout(() => {
-        showCopiedMessage.value = false;
-      }, 2000);
-      selection.removeAllRanges();
+    const copySignature = async () => {
+      if (isFormValid.value) {
+        const signatureContainer = document.querySelector(".signature-preview");
+        const html = signatureContainer.outerHTML;
+        await navigator.clipboard.writeText(html).then(() => {
+          showCopiedMessage.value = true;
+          setTimeout(() => {
+            showCopiedMessage.value = false;
+          }, 2000);
+        });
+      }
     };
 
     const handleInputChange = () => {
@@ -175,12 +215,15 @@ export default {
       website,
       formattedPhoneNumber,
       showCopiedMessage,
+      inputFilled,
       nameRules,
       jobTitleRules,
       phoneRules,
       emailRules,
       websiteRules,
       isFormValid,
+      showLogo,
+      showSignaturePreview,
       formatPhoneNumber,
       copySignature,
       handleInputChange,
