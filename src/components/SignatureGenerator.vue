@@ -54,7 +54,9 @@
       >
         Preview
       </div> -->
-      <div class="font-bold text-xl text-center text-[#ff00007e] lg:-mt-4 mt-8">
+      <div
+        class="font-bold text-xl text-center text-[#ff00007e] lg:-mt-28 sm:mt-8 mt-8"
+      >
         Preview
       </div>
 
