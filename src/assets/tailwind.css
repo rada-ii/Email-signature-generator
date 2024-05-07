@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @media (max-width: 640px) {
-  .datas {
-    line-height: 0.5px !important;
-  }
-} */
 
 @media (max-width: 1280px) {
   #nameJobContainer {
@@ -16,9 +11,6 @@
   #nameJobContainer > div {
     border-right: none !important;
   }
-  .site {
-    line-height: 1rem !important;
-  }
 }
 
 @media (max-width: 780px) {
@@ -27,10 +19,15 @@
   .signature-preview a,
   .phone {
     font-size: 0.8rem !important;
+    line-height: 0.8rem !important;
+    text-decoration: none !important;
   }
+
+
 
   .data-user {
     align-items: flex-start !important;
+    line-height: 0.8rem !important;
   }
 }
 

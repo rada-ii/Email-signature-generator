@@ -92,7 +92,9 @@
 import { ref, computed } from "vue";
 import InputField from "./InputField.vue";
 import SignaturePreview from "./SignaturePreview.vue";
-import companyLogo from "../assets/logo.png";
+// import companyLogo from "../assets/logo.png";
+// const companyLogo = "https://i.postimg.cc/vTYD6TzB/logo.png";
+const companyLogo = "https://i.postimg.cc/vTYD6TzB/logo.png";
 
 export default {
   components: {
