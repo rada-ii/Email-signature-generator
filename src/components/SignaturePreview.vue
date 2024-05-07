@@ -1,12 +1,12 @@
 <template>
   <div
     ref="signatureContainer"
-    class="signature-preview flex items-center justify-center lg:mt-24 mt-12 mb-12 xl:px-10 px-0 leading-none"
+    class="signature-preview flex items-center justify-center lg:mt-0 mt-8 sm:mb-0 mb-12 xl:px-10 px-0 leading-none"
   >
     <img
       :src="companyLogo"
       alt="Company Logo"
-      class="sm:w-48 w-32 h-auto lg:mr-4 sm:mr-4 mr-2 pl-0 sm:pr-4 pr-1 border-r border-[#FF0000] ml-0"
+      class="lg:w-48 md:w-32 w-[6.5rem] h-auto lg:mr-4 sm:mr-4 mr-2 pl-0 sm:pr-4 pr-1 border-r border-[#FF0000] ml-0"
     />
     <div class="datas">
       <div class="flex flex-col xl:flex-row xl:items-center">
@@ -15,7 +15,9 @@
         >
           {{ name }}
         </div>
-        <div class="font-normal sm:text-lg lg:text-base text-xs sm:pb-0 pb-1">
+        <div
+          class="xl:font-normal font-medium sm:text-lg lg:text-base text-xs sm:pb-0 pb-1"
+        >
           {{ jobTitle }}
         </div>
       </div>
@@ -35,7 +37,7 @@
         >
         <a
           :href="`mailto:${email}`"
-          class="text-blue-600 hover:underline transition-all delay-50 sm:font-normal font-light sm:text-xl lg:text-base text-xs"
+          class="text-blue-600 hover:underline transition-all delay-50 sm:font-normal font-light sm:text-lg lg:text-base text-xs"
           >&nbsp;{{ email }}</a
         >
       </div>
@@ -69,8 +71,15 @@ export default {
 };
 </script>
 
-<!-- <style scoped>
-.signature-preview * {
-  line-height: 1;
+<style scoped>
+@media (max-width: 639px) {
+  .signature-preview * {
+    line-height: 0.9;
+  }
 }
-</style> -->
+@media (max-width: 1023px) {
+  .signature-preview * {
+    line-height: 1.1;
+  }
+}
+</style>

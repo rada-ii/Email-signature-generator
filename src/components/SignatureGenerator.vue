@@ -42,8 +42,24 @@
     <div
       class="lg:w-2/3 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300 flex justify-around flex-col"
     >
-      <div class="font-bold text-xl text-center text-[#ff00007e] lg:-mt-6 mt-6">
+      <!-- <div
+        :class="[
+          'font-bold',
+          'text-xl',
+          'text-center',
+          'text-[#ff00007e]',
+
+          SignaturePreview ? 'mt-8' : '-my-28',
+        ]"
+      >
         Preview
+      </div> -->
+      <div class="font-bold text-xl text-center text-[#ff00007e] lg:-mt-4 mt-8">
+        Preview
+      </div>
+
+      <div class="text-green-500 text-center h-4">
+        <span v-if="showCopiedMessage">Signature copied!</span>
       </div>
       <SignaturePreview
         v-if="showLogo"
@@ -57,13 +73,10 @@
       <div v-if="showLogo" class="flex items-center">
         <button
           @click="copySignature"
-          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-200"
+          class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-200 mt-0 sm:mt-8"
         >
           Copy Signature
         </button>
-      </div>
-      <div v-if="showCopiedMessage" class="text-green-500 text-center mt-4">
-        Signature copied!
       </div>
     </div>
   </div>
@@ -103,12 +116,12 @@ export default {
     ];
     const phoneRules = [
       (v) => !!v.trim() || "Phone number is required",
-      (v) => /^\d+$/.test(v) || "Phone number must contain only digits",
+      (v) => /^\d+$/.test(v.trim()) || "Phone number must contain only digits",
     ];
     const emailRules = [
       (v) => !!v.trim() || "Email is required",
       (v) =>
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v.trim()) ||
         "Invalid email address",
     ];
     const websiteRules = [
