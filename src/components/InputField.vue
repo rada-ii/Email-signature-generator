@@ -1,4 +1,3 @@
-<!-- InputField.vue -->
 <template>
   <div class="mb-4">
     <label class="block lg:font-bold font-semibold mb-2" :for="label">{{

@@ -97,7 +97,6 @@ export default {
     const formattedPhoneNumber = ref("");
     const showCopiedMessage = ref(false);
 
-    // Validation rules
     const nameRules = [
       (v) => !!v.trim() || "Name is required",
       (v) =>
@@ -127,7 +126,6 @@ export default {
         "Invalid website URL",
     ];
 
-    // Computed property to check if all fields are valid
     const isFormValid = computed(() => {
       return (
         !nameRules.some((rule) => rule(name.value) !== true) &&
@@ -182,7 +180,7 @@ export default {
       phoneRules,
       emailRules,
       websiteRules,
-      isFormValid, // Expose the isFormValid computed property
+      isFormValid,
       formatPhoneNumber,
       copySignature,
       handleInputChange,

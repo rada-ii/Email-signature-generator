@@ -1,4 +1,3 @@
-<!-- SignaturePreview.vue -->
 <template>
   <div
     ref="signatureContainer"
