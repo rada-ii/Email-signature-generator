@@ -46,7 +46,7 @@
         class="text-xl text-center text-[#ff0000] font-thin"
         :class="{
           'lg:-mt-8 sm:mt-8 my-8': isFormValid,
-          'lg:-mt-14 sm:mt-8 mt-8': !isFormValid,
+          'lg:-mt-[4.5rem]  sm:mt-8 xl:-mt-4 mt-8': !isFormValid,
         }"
       >
         Preview

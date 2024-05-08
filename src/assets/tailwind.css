@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (max-width: 1280px) {
+@media (min-width: 1280px) {
   /* #nameJobContainer {
     flex-direction: column !important;
     align-items: flex-start !important;
   } */
+  .site {
+    line-height: 0.9rem !important;
+  }
 }
 
 @media (max-width: 780px) {
