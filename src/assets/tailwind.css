@@ -2,15 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @media (max-width: 1280px) {
-  #nameJobContainer {
+  /* #nameJobContainer {
     flex-direction: column !important;
     align-items: flex-start !important;
-  }
-  #nameJobContainer > div {
-    border-right: none !important;
-  }
+  } */
 }
 
 @media (max-width: 780px) {
@@ -23,7 +19,14 @@
     text-decoration: none !important;
   }
 
+  #nameJobContainer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
 
+  #nameJobContainer > div {
+    border-right: none !important;
+  }
 
   .data-user {
     align-items: flex-start !important;
@@ -34,5 +37,26 @@
 @media (max-width: 640px) {
   .img {
     width: 9rem !important;
+  }
+
+  .bg-black {
+    font-size: 0.8rem !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .img {
+    width: 7rem !important;
+    padding-right: 0.5rem !important;
+    margin-right: 0.5rem !important;
+  }
+
+  #nameJobContainer > div,
+  .signature-preview span,
+  .signature-preview a,
+  .phone {
+    font-size: 0.7rem !important;
+    line-height: 0.7rem !important;
+    text-decoration: none !important;
   }
 }

@@ -124,7 +124,9 @@ export default {
 
     const phoneRules = [
       (v) => !!v || "Phone number is required",
-      (v) => /^\d+$/.test(v) || "Phone number must contain only digits",
+      (v) =>
+        /^[\d\s]+$/.test(v) ||
+        "Phone number must contain only digits and spaces",
     ];
 
     const emailRules = [
