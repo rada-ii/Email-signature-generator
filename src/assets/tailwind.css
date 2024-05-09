@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+#nameJobContainer > div {
+  text-transform: capitalize !important;
+}
+
 @media (min-width: 1280px) {
   /* #nameJobContainer {
     flex-direction: column !important;
@@ -13,7 +17,10 @@
 }
 
 @media (max-width: 780px) {
-  #nameJobContainer > div,
+  #nameJobContainer > div {
+    font-size: 1rem !important;
+  }
+
   .signature-preview span,
   .signature-preview a,
   .phone {
@@ -24,22 +31,34 @@
 
   #nameJobContainer {
     flex-direction: column !important;
-    align-items: flex-start !important;
+    /* align-items: center !important; */
+    /* align-items: flex-start !important; */
   }
 
   #nameJobContainer > div {
     border-right: none !important;
   }
-
-  .data-user {
-    align-items: flex-start !important;
-    line-height: 0.8rem !important;
+  .phone {
+    padding-top: 0 !important;
+  }
+  .email,
+  .site {
+    line-height: 0.3rem !important;
   }
 }
 
 @media (max-width: 640px) {
   .img {
     width: 9rem !important;
+  }
+
+  #nameJobContainer > div,
+  .signature-preview span,
+  .signature-preview a,
+  .phone {
+    font-size: 0.7rem !important;
+    line-height: 0.7rem !important;
+    text-decoration: none !important;
   }
 
   .bg-black {
@@ -50,8 +69,6 @@
 @media (max-width: 450px) {
   .img {
     width: 7rem !important;
-    padding-right: 0.5rem !important;
-    margin-right: 0.5rem !important;
   }
 
   #nameJobContainer > div,

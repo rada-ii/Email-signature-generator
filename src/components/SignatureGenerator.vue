@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Radio buttons for template selection -->
-    <div class="radio-buttons">
+    <div class="radio-buttons text-center pb-8">
       <input
         type="radio"
         id="template1"
@@ -9,7 +9,7 @@
         v-model="selectedTemplate"
         name="template"
       />
-      <label for="template1">Template 1</label>
+      <label for="template1" class="pr-4">&nbsp;Template 1</label>
       <input
         type="radio"
         id="template2"
@@ -17,14 +17,15 @@
         v-model="selectedTemplate"
         name="template"
       />
-      <label for="template2">Template 2</label>
+      <label for="template2">&nbsp;Template 2</label>
     </div>
 
     <!-- Container for inputs and preview -->
-    <div class="bg-white rounded-lg shadow-2xl p-6 flex flex-col lg:flex-row">
+    <div class="bg-white rounded-lg shadow-2xl p-2 flex flex-col lg:flex-row">
       <!-- Inputs container -->
       <div class="w-full lg:w-1/3 pr-4">
         <InputField
+          class="pt-4"
           v-model="name"
           label="Name"
           placeholder="Enter your name"
@@ -59,12 +60,17 @@
           :rules="websiteRules"
           @input="handleInputChange"
         />
-        <input type="file" @change="handleLogoUpload" accept="image/*" />
+        <input
+          type="file"
+          @change="handleLogoUpload"
+          accept="image/*"
+          class="pb-4"
+        />
       </div>
 
       <!-- Preview container -->
       <div
-        class="w-full lg:w-2/3 pl-4 lg:border-l border-gray-300 flex flex-col items-center justify-center"
+        class="w-full lg:w-2/3 lg:border-l border-gray-300 flex flex-col items-center justify-center"
       >
         <div class="text-xl text-center text-[#ff0000] font-thin my-8">
           Preview

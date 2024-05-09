@@ -4,7 +4,7 @@
     :style="
       templateType === 'template1'
         ? 'display: flex; flex-direction: row; align-items: center'
-        : 'display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;'
+        : 'display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; '
     "
   >
     <img
@@ -14,8 +14,8 @@
       class="img"
       :style="
         templateType === 'template1'
-          ? 'width: 12.5rem; height: auto; margin-right: 1rem; padding-left: 0; padding-right: 1rem; border-right: 2px solid #ff0000;'
-          : 'width: 8rem; height: auto; margin-bottom: 1rem;'
+          ? 'width: 12.5rem; height: auto; margin-right: 0.5rem; padding-left: 0; padding-right: 0.5rem; border-right: 2px solid #ff0000;'
+          : 'width: 12rem; height: auto; margin-bottom: 1rem;'
       "
     />
     <div
@@ -27,15 +27,15 @@
         id="nameJobContainer"
         :style="
           templateType === 'template1'
-            ? 'display: flex; flex-direction: row; align-items: center'
+            ? 'display: flex; flex-direction: row; align-items: flex-start'
             : 'display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 0.5rem;'
         "
       >
         <div
           :style="
             templateType === 'template1'
-              ? 'font-weight: 400; font-size: 1.125rem; line-height: 1.2rem; margin-right: 1rem; padding-right: 1rem; border-right: 2px solid #d1d5db; text-transform: capitalize;'
-              : 'font-weight: 400; font-size: 1.25rem; line-height: 1.4rem;'
+              ? 'font-weight: 500; font-size: 1.125rem; line-height: 1rem; margin-right: 1rem; padding-right: 1rem; border-right: 2px solid #d1d5db; text-transform: capitalize;'
+              : 'font-weight: 500; font-size: 1.25rem; line-height:1rem;'
           "
         >
           {{ name }}
@@ -43,8 +43,8 @@
         <div
           :style="
             templateType === 'template1'
-              ? 'font-weight: 500; font-size: 1.125rem; line-height: 1rem'
-              : 'font-weight: 500; font-size: 1.25rem; line-height: 1.5rem; margin-top: 0.5rem;'
+              ? 'font-weight: 400; font-size: 1.125rem; line-height: 1rem'
+              : 'font-weight: 700; font-size: 1.25rem; line-height: 1.5rem; color:red;'
           "
         >
           {{ jobTitle }}
@@ -61,7 +61,7 @@
           class="phone"
           :style="
             templateType === 'template1'
-              ? 'font-weight: 300; font-size: 1.125rem; line-height: 1rem; color: #000;'
+              ? 'font-weight: 300; font-size: 1.125rem; line-height: 1rem; color: #000; padding-top:0.5rem;'
               : 'font-weight: 300; font-size: 1.125rem; line-height: 1rem; color: #000;'
           "
         >
@@ -73,11 +73,11 @@
           class="email"
           :style="
             templateType === 'template1'
-              ? 'font-weight: 300; font-size: 1.125rem; line-height: 1rem;'
-              : 'font-weight: 300; font-size: 1.125rem; line-height: 1rem;'
+              ? 'font-weight: 300; font-size: 1.125rem; line-height: 1.6rem;'
+              : 'font-weight: 300; font-size: 1.125rem; line-height: 1.6rem;'
           "
         >
-          <span>email:</span>
+          <span>email:&nbsp;</span>
           <a
             :href="`mailto:${email}`"
             style="color: #2563eb; text-decoration: underline"
@@ -94,7 +94,7 @@
               : 'font-weight: 300; font-size: 1.125rem; line-height: 0.7rem;'
           "
         >
-          <span>website:</span>
+          <span>website:&nbsp;</span>
           <a
             :href="`https://${website}`"
             target="_blank"
