@@ -1,81 +1,89 @@
+I apologize for the confusion earlier. Here's the updated code with the copy
+button functionality, validation, and the ability to switch between template
+previews: ```html
 <template>
-  <div
-    class="bg-white rounded-lg shadow-2xl sm:p-6 px-2 flex flex-col lg:flex-row sm:pt-6 pt-4"
-  >
-    <div class="lg:w-1/3 lg:pr-4 w-full">
-      <InputField
-        v-model="name"
-        label="Name"
-        placeholder="Enter your name"
-        :rules="nameRules"
-        @input="handleInputChange"
+  <div>
+    <!-- Radio buttons for template selection -->
+    <div class="radio-buttons">
+      <input
+        type="radio"
+        id="template1"
+        value="template1"
+        v-model="selectedTemplate"
+        name="template"
       />
-      <InputField
-        v-model="jobTitle"
-        label="Job Title"
-        placeholder="Enter your job title"
-        :rules="jobTitleRules"
-        @input="handleInputChange"
+      <label for="template1">Template 1</label>
+      <input
+        type="radio"
+        id="template2"
+        value="template2"
+        v-model="selectedTemplate"
+        name="template"
       />
-      <InputField
-        v-model="phone"
-        label="Phone"
-        placeholder="Enter your phone number"
-        :rules="phoneRules"
-        @input="formatPhoneNumber"
-      />
-      <InputField
-        v-model="email"
-        label="Email"
-        placeholder="Enter your email address"
-        :rules="emailRules"
-        @input="handleInputChange"
-      />
-      <InputField
-        v-model="website"
-        label="Website"
-        placeholder="Enter your website URL"
-        :rules="websiteRules"
-        @input="handleInputChange"
-      />
+      <label for="template2">Template 2</label>
     </div>
-    <div
-      class="lg:w-2/3 w-full lg:pl-4 pl-0 lg:border-l border-0 border-gray-300 flex justify-around items-center flex-col"
-    >
-      <div
-        class="text-xl text-center text-[#ff0000] font-thin"
-        :class="{
-          'lg:-mt-8 sm:mt-8 my-8': isFormValid,
-          'lg:-mt-[4.5rem]  sm:mt-8 xl:-mt-4 mt-8': !isFormValid,
-        }"
-      >
-        Preview
-      </div>
-      <div class="text-green-500 text-center h-4 my-6">
-        <span v-if="showCopiedMessage">Signature copied!</span>
-        <span
-          v-else-if="
-            !isFormValid && (name || jobTitle || phone || email || website)
-          "
-        >
-          Please fill in all fields correctly to copy the signature.
-        </span>
+
+    <!-- Container for inputs and preview -->
+    <div class="bg-white rounded-lg shadow-2xl p-6 flex flex-col lg:flex-row">
+      <!-- Inputs container -->
+      <div class="w-full lg:w-1/3 pr-4">
+        <InputField
+          v-model="name"
+          label="Name"
+          placeholder="Enter your name"
+          :rules="nameRules"
+          @input="handleInputChange"
+        />
+        <InputField
+          v-model="jobTitle"
+          label="Job Title"
+          placeholder="Enter your job title"
+          :rules="jobTitleRules"
+          @input="handleInputChange"
+        />
+        <InputField
+          v-model="phone"
+          label="Phone"
+          placeholder="Enter your phone number"
+          :rules="phoneRules"
+          @input="formatPhoneNumber"
+        />
+        <InputField
+          v-model="email"
+          label="Email"
+          placeholder="Enter your email address"
+          :rules="emailRules"
+          @input="handleInputChange"
+        />
+        <InputField
+          v-model="website"
+          label="Website"
+          placeholder="Enter your website URL"
+          :rules="websiteRules"
+          @input="handleInputChange"
+        />
+        <input type="file" @change="handleLogoUpload" accept="image/*" />
       </div>
 
-      <div v-if="showSignaturePreview">
+      <!-- Preview container -->
+      <div
+        class="w-full lg:w-2/3 pl-4 lg:border-l border-gray-300 flex flex-col items-center justify-center"
+      >
+        <div class="text-xl text-center text-[#ff0000] font-thin my-8">
+          Preview
+        </div>
         <SignaturePreview
+          ref="signaturePreview"
           :name="name"
           :jobTitle="jobTitle"
           :phone="formattedPhoneNumber"
           :email="email"
           :website="website"
-          :companyLogo="showLogo ? companyLogo : null"
+          :companyLogo="companyLogo"
+          :templateType="selectedTemplate"
         />
-      </div>
 
-      <div class="flex items-center">
         <button
-          v-if="inputFilled"
           @click="copySignature"
           :disabled="!isFormValid"
           class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-100 my-8 sm:mt-8"
@@ -83,6 +91,12 @@
         >
           Copy Signature
         </button>
+        <div class="text-green-500 text-center h-4 my-2">
+          <span v-if="showCopiedMessage">Signature copied!</span>
+          <span v-else-if="!isFormValid">
+            Please fill in all fields correctly to copy the signature.
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -92,9 +106,6 @@
 import { ref, computed } from "vue";
 import InputField from "./InputField.vue";
 import SignaturePreview from "./SignaturePreview.vue";
-// import companyLogo from "../assets/logo.png";
-// const companyLogo = "https://i.postimg.cc/vTYD6TzB/logo.png";
-const companyLogo = "https://i.postimg.cc/vTYD6TzB/logo.png";
 
 export default {
   components: {
@@ -102,6 +113,7 @@ export default {
     SignaturePreview,
   },
   setup() {
+    const selectedTemplate = ref("template1"); // default to Template 1
     const name = ref("");
     const jobTitle = ref("");
     const phone = ref("");
@@ -109,6 +121,8 @@ export default {
     const website = ref("");
     const formattedPhoneNumber = ref("");
     const showCopiedMessage = ref(false);
+    const companyLogo = ref(null); // Store base64 encoded image
+    const signaturePreview = ref(null);
 
     const nameRules = [
       (v) =>
@@ -143,42 +157,13 @@ export default {
         "Invalid website URL",
     ];
 
-    const inputFilled = computed(() => {
-      return (
-        name.value.trim() ||
-        jobTitle.value.trim() ||
-        phone.value.trim() ||
-        email.value.trim() ||
-        website.value.trim()
-      );
-    });
-
     const isFormValid = computed(() => {
       return (
-        !jobTitleRules.some((rule) => rule(jobTitle.value) !== true) &&
-        !phoneRules.some((rule) => rule(phone.value) !== true) &&
-        !emailRules.some((rule) => rule(email.value) !== true) &&
-        !websiteRules.some((rule) => rule(website.value) !== true)
-      );
-    });
-
-    const showLogo = computed(() => {
-      return (
-        name.value.trim() ||
-        jobTitle.value.trim() ||
-        phone.value.trim() ||
-        email.value.trim() ||
-        website.value.trim()
-      );
-    });
-
-    const showSignaturePreview = computed(() => {
-      return (
-        name.value ||
-        jobTitle.value ||
-        phone.value ||
-        email.value ||
-        website.value
+        nameRules.every((rule) => rule(name.value)) &&
+        jobTitleRules.every((rule) => rule(jobTitle.value)) &&
+        phoneRules.every((rule) => rule(phone.value)) &&
+        emailRules.every((rule) => rule(email.value)) &&
+        websiteRules.every((rule) => rule(website.value))
       );
     });
 
@@ -194,16 +179,32 @@ export default {
       formattedPhoneNumber.value = formattedValue;
     };
 
-    const copySignature = async () => {
+    const handleLogoUpload = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          companyLogo.value = e.target.result; // Base64 encoded string
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    const copySignature = () => {
       if (isFormValid.value) {
-        const signatureContainer = document.querySelector(".signature-preview");
+        const signatureContainer = signaturePreview.value.$el;
         const html = signatureContainer.outerHTML;
-        await navigator.clipboard.writeText(html).then(() => {
-          showCopiedMessage.value = true;
-          setTimeout(() => {
-            showCopiedMessage.value = false;
-          }, 2000);
-        });
+        navigator.clipboard
+          .writeText(html)
+          .then(() => {
+            showCopiedMessage.value = true;
+            setTimeout(() => {
+              showCopiedMessage.value = false;
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy signature: ", err);
+          });
       }
     };
 
@@ -219,19 +220,19 @@ export default {
       website,
       formattedPhoneNumber,
       showCopiedMessage,
-      inputFilled,
       nameRules,
       jobTitleRules,
       phoneRules,
       emailRules,
       websiteRules,
       isFormValid,
-      showLogo,
-      showSignaturePreview,
       formatPhoneNumber,
+      handleLogoUpload,
+      companyLogo,
+      selectedTemplate,
+      signaturePreview,
       copySignature,
       handleInputChange,
-      companyLogo,
     };
   },
 };
