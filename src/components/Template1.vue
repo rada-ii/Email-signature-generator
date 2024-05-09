@@ -1,6 +1,6 @@
 <template>
   <div
-    class="signature-preview template-one"
+    class="signature-preview"
     style="display: flex; flex-direction: row; align-items: center"
   >
     <img
@@ -17,7 +17,7 @@
         border-right: 2px solid #ff0000;
       "
     />
-    <div style="display: flex; flex-direction: column">
+    <div>
       <div
         id="nameJobContainer"
         style="display: flex; flex-direction: row; align-items: center"
@@ -41,8 +41,8 @@
       </div>
       <div class="data-user">
         <div
-          class="phone"
           v-if="phone"
+          class="phone"
           style="
             font-weight: 300;
             font-size: 1.125rem;
@@ -52,37 +52,32 @@
         >
           <span style="font-weight: 300">phone:</span> {{ phone }}
         </div>
-        <div v-if="email" class="email">
-          <span style="font-weight: 300; font-size: 1.125rem; line-height: 1rem"
-            >email:</span
-          >
+        <div
+          v-if="email"
+          class="email"
+          style="font-weight: 300; font-size: 1.125rem; line-height: 1rem"
+        >
+          <span>email:</span>
           <a
             :href="`mailto:${email}`"
-            style="
-              color: #2563eb;
-              text-decoration: underline;
-              font-size: 1.125rem;
-              line-height: 1rem;
-            "
-            >{{ email }}</a
+            style="color: #2563eb; text-decoration: underline"
           >
+            {{ email }}
+          </a>
         </div>
-        <div v-if="website" class="site">
-          <span
-            style="font-weight: 300; font-size: 1.125rem; line-height: 0.7rem"
-            >website:</span
-          >
+        <div
+          v-if="website"
+          class="site"
+          style="font-weight: 300; font-size: 1.125rem; line-height: 0.7rem"
+        >
+          <span>website:</span>
           <a
             :href="`https://${website}`"
             target="_blank"
-            style="
-              color: #2563eb;
-              text-decoration: underline;
-              font-size: 1.125rem;
-              line-height: 0.7rem;
-            "
-            >{{ website }}</a
+            style="color: #2563eb; text-decoration: underline"
           >
+            {{ website }}
+          </a>
         </div>
       </div>
     </div>
@@ -91,6 +86,13 @@
 
 <script>
 export default {
-  props: ["companyLogo", "name", "jobTitle", "phone", "email", "website"],
+  props: {
+    name: String,
+    jobTitle: String,
+    phone: String,
+    email: String,
+    website: String,
+    companyLogo: String,
+  },
 };
 </script>
