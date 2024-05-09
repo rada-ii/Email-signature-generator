@@ -1,6 +1,3 @@
-I apologize for the confusion earlier. Here's the updated code with the copy
-button functionality, validation, and the ability to switch between template
-previews: ```html
 <template>
   <div>
     <!-- Radio buttons for template selection -->
@@ -74,6 +71,7 @@ previews: ```html
         </div>
         <SignaturePreview
           ref="signaturePreview"
+          :key="`${name}-${jobTitle}-${phone}-${email}-${website}-${companyLogo}-${selectedTemplate}`"
           :name="name"
           :jobTitle="jobTitle"
           :phone="formattedPhoneNumber"
@@ -84,6 +82,7 @@ previews: ```html
         />
 
         <button
+          v-if="hasStartedTyping"
           @click="copySignature"
           :disabled="!isFormValid"
           class="bg-black hover:bg-[#FF0000] text-white py-2 px-4 rounded mx-auto transition-all delay-100 my-8 sm:mt-8"
@@ -91,6 +90,7 @@ previews: ```html
         >
           Copy Signature
         </button>
+
         <div class="text-green-500 text-center h-4 my-2">
           <span v-if="showCopiedMessage">Signature copied!</span>
           <span v-else-if="!isFormValid">
@@ -113,6 +113,13 @@ export default {
     SignaturePreview,
   },
   setup() {
+    const hasStartedTyping = ref(false);
+
+    const handleInputChange = () => {
+      showCopiedMessage.value = false;
+      hasStartedTyping.value = true; // Update on any input change
+      isFormValid.value = isFormValid.value; // Trigger re-evaluation of the computed property
+    };
     const selectedTemplate = ref("template1"); // default to Template 1
     const name = ref("");
     const jobTitle = ref("");
@@ -156,14 +163,19 @@ export default {
         /^(https?:\/\/)?[\w.-]+\.[a-zA-Z]{2,}$/.test(v) ||
         "Invalid website URL",
     ];
-
     const isFormValid = computed(() => {
+      const validName = nameRules.every((rule) => rule(name.value) === true);
+      const validJobTitle = jobTitleRules.every(
+        (rule) => rule(jobTitle.value) === true
+      );
+      const validPhone = phoneRules.every((rule) => rule(phone.value) === true);
+      const validEmail = emailRules.every((rule) => rule(email.value) === true);
+      const validWebsite = websiteRules.every(
+        (rule) => rule(website.value) === true
+      );
+
       return (
-        nameRules.every((rule) => rule(name.value)) &&
-        jobTitleRules.every((rule) => rule(jobTitle.value)) &&
-        phoneRules.every((rule) => rule(phone.value)) &&
-        emailRules.every((rule) => rule(email.value)) &&
-        websiteRules.every((rule) => rule(website.value))
+        validName && validJobTitle && validPhone && validEmail && validWebsite
       );
     });
 
@@ -208,10 +220,6 @@ export default {
       }
     };
 
-    const handleInputChange = () => {
-      showCopiedMessage.value = false;
-    };
-
     return {
       name,
       jobTitle,
@@ -232,6 +240,7 @@ export default {
       selectedTemplate,
       signaturePreview,
       copySignature,
+      hasStartedTyping,
       handleInputChange,
     };
   },
