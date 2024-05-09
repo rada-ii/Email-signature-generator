@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Radio buttons for template selection -->
     <div class="radio-buttons text-center pb-8">
       <input
         type="radio"
@@ -20,9 +19,7 @@
       <label for="template2">&nbsp;Template 2</label>
     </div>
 
-    <!-- Container for inputs and preview -->
     <div class="bg-white rounded-lg shadow-2xl p-2 flex flex-col lg:flex-row">
-      <!-- Inputs container -->
       <div class="w-full lg:w-1/3 pr-4">
         <InputField
           class="pt-4"
@@ -68,7 +65,6 @@
         />
       </div>
 
-      <!-- Preview container -->
       <div
         class="w-full lg:w-2/3 lg:border-l border-gray-300 flex flex-col items-center justify-center"
       >
@@ -123,10 +119,10 @@ export default {
 
     const handleInputChange = () => {
       showCopiedMessage.value = false;
-      hasStartedTyping.value = true; // Update on any input change
-      isFormValid.value = isFormValid.value; // Trigger re-evaluation of the computed property
+      hasStartedTyping.value = true;
+      isFormValid.value = isFormValid.value;
     };
-    const selectedTemplate = ref("template1"); // default to Template 1
+    const selectedTemplate = ref("template1");
     const name = ref("");
     const jobTitle = ref("");
     const phone = ref("");
@@ -134,7 +130,7 @@ export default {
     const website = ref("");
     const formattedPhoneNumber = ref("");
     const showCopiedMessage = ref(false);
-    const companyLogo = ref(null); // Store base64 encoded image
+    const companyLogo = ref(null);
     const signaturePreview = ref(null);
 
     const nameRules = [
@@ -202,7 +198,7 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          companyLogo.value = e.target.result; // Base64 encoded string
+          companyLogo.value = e.target.result;
         };
         reader.readAsDataURL(file);
       }
