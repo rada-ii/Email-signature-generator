@@ -69,8 +69,8 @@ This project is licensed under the **MIT License**.
 
 ---
 
-## ✨ Author
+## 👩‍💻 Author
 
-Developed by [Rada Ivankovic](https://github.com/rada-ii)
+Developed by [Rada Ivankovic](https://github.com/rada-ii) ✨ 
 
 > "Crafted with care, validated with Vue, styled with Tailwind."
