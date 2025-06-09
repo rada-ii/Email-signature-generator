@@ -1,6 +1,6 @@
 # Email Signature Generator
 
-**Email Signature Generator** is a modern web application built with **Vue 3**, **Vite**, and **Tailwind CSS** that allows users to create clean, customizable email signatures using a simple form and live preview.
+This is a modern web application built with **Vue 3**, **Vite**, and **Tailwind CSS** that allows users to create clean, customizable email signatures using a simple form and live preview.
 
 ---
 
