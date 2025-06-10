@@ -14,6 +14,13 @@ This is a modern web application built with **Vue 3**, **Vite**, and **Tailwind 
 - 🔐 **Form Validation** – Robust rules ensure input is clean and professional
 
 ---
+## 🌐 Live Demo
+
+<a href="https://email-signature-generator-steel.vercel.app/" target="_blank" rel="noopener noreferrer">
+    👉 View Live Application
+</a>
+
+---
 
 ## 🛠️ Built With
 
@@ -51,11 +58,6 @@ http://localhost:3000
 
 ---
 
-## 🌐 Live Demo
-
-👉 [Deployed version on Vercel](https://email-signature-generator-steel.vercel.app/)
-
----
 
 ## 🤝 Contributing
 
